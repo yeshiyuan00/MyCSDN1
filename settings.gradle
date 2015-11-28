@@ -1,1 +1,3 @@
-include ':app'
+include ':app', ':csdnsplider', ':XListView'
+include ':imageloadlibrary'
+include ':gestureimageview'
