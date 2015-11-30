@@ -1,5 +1,6 @@
 package com.example.yeshiyuan.mycsdn.fragment;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.yeshiyuan.mycsdn.NewsContentActivity;
 import com.example.yeshiyuan.mycsdn.R;
 import com.example.yeshiyuan.mycsdn.adapter.NewsItemAdapter;
 import com.example.yeshiyuan.mycsdn.dao.NewsItemDao;
@@ -89,6 +92,10 @@ public class MainFragment extends Fragment implements IXListViewRefreshListener,
      */
     private List<NewsItem> mDatas = new ArrayList<NewsItem>();
 
+    public MainFragment(){
+        this(Constaint.NEWS_TYPE_YEJIE);
+    }
+
     /**
      * 获得newType
      *
@@ -121,6 +128,15 @@ public class MainFragment extends Fragment implements IXListViewRefreshListener,
             mXListView.NotRefreshAtBegin();
         }
 
+        mXListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewsItem newsItem=mDatas.get(position-1);
+                Intent intent = new Intent(getActivity(), NewsContentActivity.class);
+                intent.putExtra("url", newsItem.getLink());
+                startActivity(intent);
+            }
+        });
     }
 
     @Nullable
